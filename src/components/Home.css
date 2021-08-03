@@ -1,0 +1,26 @@
+.home{
+    text-align: center;
+    font-smooth:inherit;
+    padding: 30px;
+}
+
+p, h1, h2, h3, h4, h5, h6{
+    color: rgb(0, 80, 112);
+}
+
+#head{
+    font-weight: 900;
+}
+
+ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+p{
+    font-size: 18px;
+    padding: 10px;
+
+}
