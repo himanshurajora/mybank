@@ -1,23 +1,23 @@
 interface ICustomer {
-    gender : string
-    name : {
-        title : string
-        first : string
-        last : string
+    gender: string
+    name: {
+        title: string
+        first: string
+        last: string
     }
     email: string
-    image : string
-    balance : number
+    image: string
+    balance: number
 }
 
-interface ITransaction{
+interface ITransaction {
     customer_id: number
-    type : "Credit" | "Debit"
-    amount : string
-    time : string
+    type: "Credit" | "Debit"
+    amount: number
+    time: number
 }
 
-var Customers : ICustomer[] = [
+var Customers: ICustomer[] = [
     {
         "gender": "male",
         "name": {
@@ -25,7 +25,7 @@ var Customers : ICustomer[] = [
             "first": "Carl",
             "last": "Rasmussen"
         },
-        "email" : "grayson.wang@example.com",
+        "email": "fsgsg24@example.com",
         "image": "https://randomuser.me/api/portraits/men/70.jpg",
         "balance": 43000
     },
@@ -36,7 +36,7 @@ var Customers : ICustomer[] = [
             "first": "Diego",
             "last": "Farias"
         },
-        "email" : "grayson.wang@example.com",
+        "email": "2gbrh53.wang@example.com",
 
         "image": "https://randomuser.me/api/portraits/men/63.jpg",
         "balance": 12000
@@ -49,7 +49,7 @@ var Customers : ICustomer[] = [
             "first": "Carolina",
             "last": "Gallardo"
         },
-        "email" : "grayson.wang@example.com",
+        "email": "vshuuui563@example.com",
         "image": "https://randomuser.me/api/portraits/women/38.jpg",
         "balance": 35000
 
@@ -61,7 +61,7 @@ var Customers : ICustomer[] = [
             "first": "Beatriz",
             "last": "Vicente"
         },
-        "email" : "grayson.wang@example.com",
+        "email": "shdfffh67@example.com",
         "image": "https://randomuser.me/api/portraits/women/79.jpg",
         "balance": 48000
     },
@@ -72,7 +72,7 @@ var Customers : ICustomer[] = [
             "first": "Arnold",
             "last": "Ray"
         },
-        "email" : "grayson.wang@example.com",
+        "email": "gwyu3ue.com",
         "image": "https://randomuser.me/api/portraits/men/18.jpg",
         "balance": 28000
     }
@@ -81,125 +81,94 @@ var Customers : ICustomer[] = [
 var Transactions: ITransaction[] = [
     {
         "customer_id": 1,
-        "amount": "2,580.76",
+        "amount": 3680.35,
         "type": "Credit",
-        "time": "2014-01-22T07:40:45 -06:-30"
+        "time": 1628046472580
       },
       {
         "customer_id": 2,
-        "amount": "3,378.89",
+        "amount": 3355.96,
         "type": "Credit",
-        "time": "2016-05-15T08:35:33 -06:-30"
+        "time": 1628046472580
       },
       {
         "customer_id": 3,
-        "amount": "3,588.13",
+        "amount": 1733.77,
         "type": "Credit",
-        "time": "2016-01-30T05:37:45 -06:-30"
+        "time": 1628046472580
       },
       {
         "customer_id": 4,
-        "amount": "2,680.09",
+        "amount": 1754.12,
         "type": "Credit",
-        "time": "2015-10-06T12:39:42 -06:-30"
+        "time": 1628046472580
       },
       {
         "customer_id": 5,
-        "amount": "3,358.48",
+        "amount": 3416.15,
         "type": "Credit",
-        "time": "2018-03-26T07:08:02 -06:-30"
+        "time": 1628046472580
       },
       {
         "customer_id": 1,
-        "amount": "1,160.82",
+        "amount": 1883.95,
         "type": "Debit",
-        "time": "2018-07-01T03:23:53 -06:-30"
+        "time": 1628046519246
       },
       {
         "customer_id": 2,
-        "amount": "1,683.59",
+        "amount": 3491.98,
         "type": "Debit",
-        "time": "2017-09-16T04:18:18 -06:-30"
+        "time": 1628046519246
       },
       {
         "customer_id": 3,
-        "amount": "1,675.54",
+        "amount": 3140.29,
         "type": "Debit",
-        "time": "2021-04-19T02:14:17 -06:-30"
+        "time": 1628046519246
       },
       {
         "customer_id": 4,
-        "amount": "3,286.89",
+        "amount": 1933.07,
         "type": "Debit",
-        "time": "2018-10-03T08:27:51 -06:-30"
+        "time": 1628046519246
       },
       {
         "customer_id": 5,
-        "amount": "3,052.63",
+        "amount": 1272.75,
         "type": "Debit",
-        "time": "2017-07-10T08:40:16 -06:-30"
-      },
-      {
-        "customer_id": 1,
-        "amount": "3,723.46",
-        "type": "Credit",
-        "time": "2020-04-23T10:52:12 -06:-30"
-      },
-      {
-        "customer_id": 2,
-        "amount": "1,856.03",
-        "type": "Credit",
-        "time": "2021-02-04T06:27:08 -06:-30"
+        "time": 1628046519246
       },
       {
         "customer_id": 3,
-        "amount": "2,324.66",
-        "type": "Credit",
-        "time": "2020-03-20T08:53:28 -06:-30"
+        "amount": 2169.7,
+        "type": "Debit",
+        "time": 1628046552715
       },
       {
         "customer_id": 4,
-        "amount": "3,440.17",
-        "type": "Credit",
-        "time": "2017-08-09T12:56:14 -06:-30"
+        "amount": 2433.45,
+        "type": "Debit",
+        "time": 1628046552715
       },
       {
         "customer_id": 5,
-        "amount": "1,831.23",
-        "type": "Credit",
-        "time": "2014-08-04T07:58:08 -06:-30"
+        "amount": 1609.06,
+        "type": "Debit",
+        "time": 1628046552715
       },
       {
-        "customer_id": 1,
-        "amount": "3,305.95",
+        "customer_id": 6,
+        "amount": 1241.21,
         "type": "Debit",
-        "time": "2019-05-13T06:41:58 -06:-30"
+        "time": 1628046552715
       },
       {
-        "customer_id": 2,
-        "amount": "2,482.52",
+        "customer_id": 7,
+        "amount": 2890.98,
         "type": "Debit",
-        "time": "2017-09-01T04:54:10 -06:-30"
-      },
-      {
-        "customer_id": 3,
-        "amount": "2,983.43",
-        "type": "Debit",
-        "time": "2019-11-04T08:20:54 -06:-30"
-      },
-      {
-        "customer_id": 4,
-        "amount": "2,730.48",
-        "type": "Debit",
-        "time": "2018-05-16T04:07:29 -06:-30"
-      },
-      {
-        "customer_id": 5,
-        "amount": "3,800.24",
-        "type": "Debit",
-        "time": "2019-04-16T02:03:08 -06:-30"
-      },
+        "time": 1628046552715
+      }
 ]
-
 
 export default { Customers, Transactions }
