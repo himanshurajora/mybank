@@ -22,16 +22,19 @@ interface ITransaction {
     customer_id: number
     type: "Credit" | "Debit"
     amount: number
+    to_from: number
     time: number
 }
  
 function Customer() {
-    var { id } = useParams<any>();
+    var { id } = useParams<any>()
     var customersDB = firebase.firestore().collection("customers")
     var transactionsDB = firebase.firestore().collection("transactions")
-    var [customerdata, setCustomerdata] = useState<ICustomer>();
+    var [customerdata, setCustomerdata] = useState<ICustomer>()
     var [transactiondata, setTransactiondata] = useState<ITransaction[]>()
-    var [accounto, setAccountto] = useState<number>()
+    var [accounto, setAccountto] = useState<number>(0)
+    var [amount, setAmount] = useState<number>(0)
+
     useEffect(() => {
         customersDB.where("accountNumber", "==", parseInt(id)).get().then((value) => {
             setCustomerdata(value.docs[0].data() as ICustomer)
@@ -45,6 +48,31 @@ function Customer() {
             setTransactiondata(arr)
         })
         }, [])
+
+    const send = async () => {
+        var SenderData : ITransaction = {
+            amount : amount,
+            customer_id: parseInt(id),
+            to_from: accounto,
+            time: Date.now(),
+            type: "Debit"
+        }
+
+        var RecieverData : ITransaction = {
+            amount : amount,
+            customer_id: accounto,
+            to_from: parseInt(id),
+            time: Date.now(),
+            type: "Credit"
+        }
+
+        
+
+        const s = await transactionsDB.add(SenderData)
+        const r = await transactionsDB.add(RecieverData)
+
+        console.log(s.id, r.id, "Sent successfully")
+    }
 
     return (
         <div className="container">
@@ -63,8 +91,8 @@ function Customer() {
                         <div className="profile">
                             <h3>Make Transaction</h3>
                             <form action="">
-                                <input type="text" placeholder={"Account Number"}/>
-                                <input type="text" placeholder={"Amount"}/>
+                                <input type="text" onChange={(e)=>{setAccountto(parseInt(e.target.value))}} required placeholder={"Account Number"}/>
+                                <input type="text" onChange={(e)=>{setAmount(parseInt(e.target.value))}} required placeholder={"Amount"}/>
                                 <button>Send Money</button>
                             </form>
 
