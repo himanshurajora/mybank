@@ -34,7 +34,7 @@ function Customer() {
     var [transactiondata, setTransactiondata] = useState<ITransaction[]>()
     var [accounto, setAccountto] = useState<number>(0)
     var [amount, setAmount] = useState<number>(0)
-
+    var [notification, setNotification] = useState("");
     useEffect(() => {
         customersDB.where("accountNumber", "==", parseInt(id)).get().then((value) => {
             setCustomerdata(value.docs[0].data() as ICustomer)
@@ -66,12 +66,6 @@ function Customer() {
             type: "Credit"
         }
 
-        
-
-        const s = await transactionsDB.add(SenderData)
-        const r = await transactionsDB.add(RecieverData)
-
-        console.log(s.id, r.id, "Sent successfully")
     }
 
     return (
@@ -85,6 +79,7 @@ function Customer() {
                     <p>Account Number: {customerdata?.accountNumber}</p>
                     <p>Gender: {customerdata?.gender}</p>
                     <p>Email: {customerdata?.email}</p>
+                    <p key={customerdata?.accountNumber} className="credited"> Current Balance: <b>{customerdata?.balance}</b></p>
                 </div>
                 <div className="data">
                     <div className="main">
@@ -93,7 +88,7 @@ function Customer() {
                             <form action="">
                                 <input type="text" onChange={(e)=>{setAccountto(parseInt(e.target.value))}} required placeholder={"Account Number"}/>
                                 <input type="text" onChange={(e)=>{setAmount(parseInt(e.target.value))}} required placeholder={"Amount"}/>
-                                <button>Send Money</button>
+                                <button onClick={(e)=>{e.preventDefault(); send()}}>Send Money</button>
                             </form>
 
                             <h3>History</h3>
@@ -101,10 +96,10 @@ function Customer() {
                                 {
                                     transactiondata?.map((value)=>{
                                         if(value.type == "Credit"){
-                                            return <p className="debited"> - Debited {value.amount}</p>
+                                            return <p key={value.time} className="debited"> - Debited {value.amount}</p>
                                         }
                                         else{
-                                            return <p className="credited"> + Credited {value.amount}</p>
+                                            return <p key={value.time} className="credited"> + Credited {value.amount}</p>
                                         }
                                     })
                                 }
