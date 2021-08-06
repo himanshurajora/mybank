@@ -5,7 +5,7 @@ import 'firebase/app'
 import 'firebase/firestore'
 import "./All.css"
 import Customer from './Customer'
-
+import dataset from '../dataset/dataset'
 interface ICustomer {
     gender: string
     name: {
@@ -35,6 +35,7 @@ firebase.initializeApp(firebaseConfig);
 
 var customersdb = firebase.firestore().collection("customers");
 
+  
 function All() {
 
     var [customers, setCustomers] = useState<Array<any>>([])
