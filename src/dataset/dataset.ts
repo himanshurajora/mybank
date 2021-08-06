@@ -171,4 +171,20 @@ var Transactions: ITransaction[] = [
       }
 ]
 
-export default { Customers, Transactions }
+export default { Customers, Transactions}
+
+
+/**
+ * addition code
+ * 
+ *   const add = async () => {
+    data.Customers.forEach(async (customer)=>{
+        var data = await db.add(customer)
+        console.log(`data added at ${data.id}`)
+      })
+  }
+  
+ * 
+                <button onClick={add}>Click To Add</button>
+ * 
+ */
