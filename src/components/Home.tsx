@@ -27,7 +27,7 @@ function Home() {
                 </li>
             </ul>
 
-        <h3>Technologies Used : React, TypeScript, WebSQL</h3>
+        <h3>Technologies Used : React, TypeScript & Firebase</h3>
 
             <br /><br />
 
