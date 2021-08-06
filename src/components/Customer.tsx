@@ -24,7 +24,7 @@ interface ITransaction {
     amount: number
     time: number
 }
-
+ 
 function Customer() {
     var { id } = useParams<any>();
     var customersDB = firebase.firestore().collection("customers")
