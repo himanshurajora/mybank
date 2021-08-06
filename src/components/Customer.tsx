@@ -35,9 +35,11 @@ function Customer() {
     var [accounto, setAccountto] = useState<number>(0)
     var [amount, setAmount] = useState<number>(0)
     var [notification, setNotification] = useState("");
+    var [balance, setBalance] = useState<number>();
     useEffect(() => {
         customersDB.where("accountNumber", "==", parseInt(id)).get().then((value) => {
             setCustomerdata(value.docs[0].data() as ICustomer)
+            setBalance(value.docs[0].data().balance)
         })
 
         transactionsDB.where("customer_id", "==", parseInt(id)).get().then((value)=>{
@@ -48,7 +50,7 @@ function Customer() {
             setTransactiondata(arr)
         })
         }, [])
-
+    
     const send = async () => {
         var SenderData : ITransaction = {
             amount : amount,
@@ -66,6 +68,21 @@ function Customer() {
             type: "Credit"
         }
 
+        var userref : firebase.firestore.DocumentReference;
+        var user = await customersDB.where("accountNumber", "==", parseInt(id)).get()
+        userref = user.docs[0].ref
+
+        userref.update({balance: firebase.firestore.FieldValue.increment(-amount)})
+        setBalance(balance! - amount);
+        
+        var sref = await transactionsDB.add(SenderData)
+        var rref = await transactionsDB.add(RecieverData)
+
+        var user = await customersDB.where("accountNumber", "==", accounto).get()
+        userref = user.docs[0].ref
+
+        userref.update({balance: firebase.firestore.FieldValue.increment(amount)})
+        
     }
 
     return (
@@ -79,7 +96,7 @@ function Customer() {
                     <p>Account Number: {customerdata?.accountNumber}</p>
                     <p>Gender: {customerdata?.gender}</p>
                     <p>Email: {customerdata?.email}</p>
-                    <p key={customerdata?.accountNumber} className="credited"> Current Balance: <b>{customerdata?.balance}</b></p>
+                    <p key={customerdata?.accountNumber} className="credited"> Current Balance: <b>{balance}</b></p>
                 </div>
                 <div className="data">
                     <div className="main">
@@ -96,10 +113,10 @@ function Customer() {
                                 {
                                     transactiondata?.map((value)=>{
                                         if(value.type == "Credit"){
-                                            return <p key={value.time} className="debited"> - Debited {value.amount}</p>
+                                            return <p key={value.time} className="credited"> + Credited {value.amount}</p>
                                         }
                                         else{
-                                            return <p key={value.time} className="credited"> + Credited {value.amount}</p>
+                                            return <p key={value.time} className="debited"> - Debited {value.amount}</p>
                                         }
                                     })
                                 }
