@@ -89,19 +89,19 @@ function Customer() {
 
                 try {
                     if (user.docs[0].exists) {
-                        // userref = user.docs[0].ref
+                        userref = user.docs[0].ref
 
-                        // userref.update({ balance: firebase.firestore.FieldValue.increment(amount) })
+                        userref.update({ balance: firebase.firestore.FieldValue.increment(amount) })
 
-                        // var userref: firebase.firestore.DocumentReference;
-                        // var user = await customersDB.where("accountNumber", "==", parseInt(id)).get()
-                        // userref = user.docs[0].ref
+                        var userref: firebase.firestore.DocumentReference;
+                        var user = await customersDB.where("accountNumber", "==", parseInt(id)).get()
+                        userref = user.docs[0].ref
 
-                        // userref.update({ balance: firebase.firestore.FieldValue.increment(-amount) })
+                        userref.update({ balance: firebase.firestore.FieldValue.increment(-amount) })
 
-                        // var sref = await transactionsDB.add(SenderData)
-                        // var rref = await transactionsDB.add(RecieverData)
-                        // setBalance(balance! - amount);
+                        var sref = await transactionsDB.add(SenderData)
+                        var rref = await transactionsDB.add(RecieverData)
+                        setBalance(balance! - amount);
 
                         var tdata = [...[SenderData], ...transactiondata!]
                         setTransactiondata(tdata)
