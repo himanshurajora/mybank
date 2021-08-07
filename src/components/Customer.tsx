@@ -25,15 +25,15 @@ interface ITransaction {
     to_from: number
     time: number
 }
- 
+
 function Customer() {
     var { id } = useParams<any>()
     var customersDB = firebase.firestore().collection("customers")
     var transactionsDB = firebase.firestore().collection("transactions")
     var [customerdata, setCustomerdata] = useState<ICustomer>()
     var [transactiondata, setTransactiondata] = useState<ITransaction[]>()
-    var [accounto, setAccountto] = useState<number>(0)
-    var [amount, setAmount] = useState<number>(0)
+    var [accounto, setAccountto] = useState<number>(NaN)
+    var [amount, setAmount] = useState<number>(NaN)
     var [notification, setNotification] = useState("");
     var [balance, setBalance] = useState<number>();
     useEffect(() => {
@@ -42,47 +42,86 @@ function Customer() {
             setBalance(value.docs[0].data().balance)
         })
 
-        transactionsDB.where("customer_id", "==", parseInt(id)).get().then((value)=>{
+        transactionsDB.where("customer_id", "==", parseInt(id)).orderBy("time", "desc").get().then((value) => {
             var arr: ITransaction[] = []
-            value.forEach((result)=>{
+            value.forEach((result) => {
                 arr.push(result.data() as ITransaction)
             })
             setTransactiondata(arr)
         })
-        }, [])
-    
-    const send = async () => {
-        var SenderData : ITransaction = {
-            amount : amount,
-            customer_id: parseInt(id),
-            to_from: accounto,
-            time: Date.now(),
-            type: "Debit"
+    }, [])
+
+    const send = async (e: MouseEvent) => {
+
+        (e.target as HTMLButtonElement).disabled = true;
+        (e.target as HTMLButtonElement).innerText = "Sending...";
+
+        console.log(accounto, amount);
+
+
+        if (isNaN(amount) || isNaN(accounto)) {
+            setNotification("Please Fill Account Number and Amount")
+        }
+        else {
+
+            if (amount <= 0) {
+                setNotification("Amount must be greater than 0")
+            }
+
+            else {
+                var SenderData: ITransaction = {
+                    amount: amount,
+                    customer_id: parseInt(id),
+                    to_from: accounto,
+                    time: Date.now(),
+                    type: "Debit"
+                }
+
+                var RecieverData: ITransaction = {
+                    amount: amount,
+                    customer_id: accounto,
+                    to_from: parseInt(id),
+                    time: Date.now(),
+                    type: "Credit"
+                }
+
+                var user = await customersDB.where("accountNumber", "==", accounto).get()
+
+                try {
+                    if (user.docs[0].exists) {
+                        // userref = user.docs[0].ref
+
+                        // userref.update({ balance: firebase.firestore.FieldValue.increment(amount) })
+
+                        // var userref: firebase.firestore.DocumentReference;
+                        // var user = await customersDB.where("accountNumber", "==", parseInt(id)).get()
+                        // userref = user.docs[0].ref
+
+                        // userref.update({ balance: firebase.firestore.FieldValue.increment(-amount) })
+
+                        // var sref = await transactionsDB.add(SenderData)
+                        // var rref = await transactionsDB.add(RecieverData)
+                        // setBalance(balance! - amount);
+
+                        var tdata = [...[SenderData], ...transactiondata!]
+                        setTransactiondata(tdata)
+
+                        setNotification("Money Sent Successfully");
+                    }
+                    else {
+                        setNotification("Account Doesn't exist")
+                    }
+                } catch (err) {
+                    setNotification("Account Doesn't exist")
+                }
+            }
+
+
         }
 
-        var RecieverData : ITransaction = {
-            amount : amount,
-            customer_id: accounto,
-            to_from: parseInt(id),
-            time: Date.now(),
-            type: "Credit"
-        }
 
-        var userref : firebase.firestore.DocumentReference;
-        var user = await customersDB.where("accountNumber", "==", parseInt(id)).get()
-        userref = user.docs[0].ref
-
-        userref.update({balance: firebase.firestore.FieldValue.increment(-amount)})
-        setBalance(balance! - amount);
-        
-        var sref = await transactionsDB.add(SenderData)
-        var rref = await transactionsDB.add(RecieverData)
-
-        var user = await customersDB.where("accountNumber", "==", accounto).get()
-        userref = user.docs[0].ref
-
-        userref.update({balance: firebase.firestore.FieldValue.increment(amount)})
-        
+        (e.target as HTMLButtonElement).disabled = false;
+        (e.target as HTMLButtonElement).innerText = "Send Money"
     }
 
     return (
@@ -103,20 +142,22 @@ function Customer() {
                         <div className="profile">
                             <h3>Make Transaction</h3>
                             <form action="">
-                                <input type="text" onChange={(e)=>{setAccountto(parseInt(e.target.value))}} required placeholder={"Account Number"}/>
-                                <input type="text" onChange={(e)=>{setAmount(parseInt(e.target.value))}} required placeholder={"Amount"}/>
-                                <button onClick={(e)=>{e.preventDefault(); send()}}>Send Money</button>
+                                <input type="text" onChange={(e) => { setAccountto(parseFloat(e.target.value)) }} required placeholder={"Account Number"} />
+                                <input type="text" onChange={(e) => { setAmount(parseFloat(e.target.value)) }} required placeholder={"Amount"} />
+                                <button onClick={(e) => { e.preventDefault(); send(e) }}>Send Money</button>
                             </form>
-
+                            <br />
+                            <span id="message">{notification}</span>
+                            <hr />
                             <h3>History</h3>
                             <div>
                                 {
-                                    transactiondata?.map((value)=>{
-                                        if(value.type == "Credit"){
-                                            return <p key={value.time} className="credited"> + Credited {value.amount}</p>
+                                    transactiondata?.map((value) => {
+                                        if (value.type == "Credit") {
+                                            return <p key={value.time} className="credited"> + Credited {value.amount} from {value.to_from}</p>
                                         }
-                                        else{
-                                            return <p key={value.time} className="debited"> - Debited {value.amount}</p>
+                                        else {
+                                            return <p key={value.time} className="debited"> - Debited {value.amount} to {value.to_from}</p>
                                         }
                                     })
                                 }
