@@ -51,7 +51,7 @@ function Customer() {
         })
     }, [])
 
-    const send = async (e: MouseEvent) => {
+    const send = async (e: any) => {
 
         (e.target as HTMLButtonElement).disabled = true;
         (e.target as HTMLButtonElement).innerText = "Sending...";
