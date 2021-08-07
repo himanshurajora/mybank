@@ -82,6 +82,10 @@
     background-color: rgb(0, 43, 83);
 }
 
+.main .profile button:disabled{
+    background-color: gray;
+}
+
 .credited, .debited{
     transition: 100ms;
 }
@@ -109,4 +113,9 @@
 .debited:hover, .credited:hover{
     transform: scale(1.04);
     border-radius: 10px;
+}
+
+#message{
+    color: rgb(0, 100, 111);
+    /* font-size: 15px; */
 }
