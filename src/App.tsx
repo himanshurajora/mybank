@@ -8,12 +8,7 @@ import All from './components/All'
 import dataset from './dataset/dataset'
 import Customer from './components/Customer'
 
-
-
-
-
 function App() {
-
 
   return (
     <div className="App">

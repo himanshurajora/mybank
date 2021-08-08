@@ -5,6 +5,8 @@ import 'firebase/app'
 import 'firebase/firestore'
 import { useParams } from 'react-router-dom'
 import './Customer.css'
+
+// Customer model
 interface ICustomer {
     gender: string
     name: {
@@ -18,6 +20,7 @@ interface ICustomer {
     balance: number
 }
 
+// Transaction MOdel
 interface ITransaction {
     customer_id: number
     type: "Credit" | "Debit"
@@ -27,6 +30,8 @@ interface ITransaction {
 }
 
 function Customer() {
+
+    // Different states that control the overall workflow of the webapp
     var { id } = useParams<any>()
     var customersDB = firebase.firestore().collection("customers")
     var transactionsDB = firebase.firestore().collection("transactions")
@@ -36,6 +41,8 @@ function Customer() {
     var [amount, setAmount] = useState<number>(NaN)
     var [notification, setNotification] = useState("");
     var [balance, setBalance] = useState<number>();
+
+
     useEffect(() => {
         customersDB.where("accountNumber", "==", parseInt(id)).get().then((value) => {
             setCustomerdata(value.docs[0].data() as ICustomer)
@@ -51,12 +58,15 @@ function Customer() {
         })
     }, [])
 
+
+    /**
+     * send fucntion for money transfers
+     * @param e 
+     */
     const send = async (e: any) => {
 
         (e.target as HTMLButtonElement).disabled = true;
         (e.target as HTMLButtonElement).innerText = "Sending...";
-
-        console.log(accounto, amount);
 
 
         if (isNaN(amount) || isNaN(accounto)) {

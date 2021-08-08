@@ -4,8 +4,7 @@ import firebase from 'firebase'
 import 'firebase/app'
 import 'firebase/firestore'
 import "./All.css"
-import Customer from './Customer'
-import dataset from '../dataset/dataset'
+
 interface ICustomer {
     gender: string
     name: {
@@ -47,7 +46,6 @@ function All() {
                 d.push(value.data())
             })
             setCustomers(d)
-            console.log(customers)
         })
     }, [])
 
