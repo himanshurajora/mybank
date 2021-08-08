@@ -58,7 +58,7 @@ function Customer() {
         })
     }, [])
 
-    
+
 
     /**
      * send fucntion for money transfers
@@ -79,6 +79,9 @@ function Customer() {
                 setNotification("Amount must be greater than 0")
             }
 
+            else if (amount > balance!) {
+                setNotification("You do not have sufficient balance")
+            }
             else {
                 var SenderData: ITransaction = {
                     amount: amount,
@@ -146,7 +149,7 @@ function Customer() {
                     <p>Account Number: {customerdata?.accountNumber}</p>
                     <p>Gender: {customerdata?.gender}</p>
                     <p>Email: {customerdata?.email}</p>
-                    <p key={customerdata?.accountNumber} className="credited"> Current Balance: <b>{balance}</b></p>
+                    <p key={customerdata?.accountNumber} className="credited"> Current Balance: <b>{Math.ceil(balance!)}</b></p>
                 </div>
                 <div className="data">
                     <div className="main">
