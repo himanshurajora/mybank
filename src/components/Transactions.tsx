@@ -22,7 +22,7 @@ function Transactions() {
 
 
     useEffect(() => {
-        transactionsDB.orderBy("time", "desc").get().then((value) => {
+        transactionsDB.where("type", "==", "Debit").orderBy("time", "desc").get().then((value) => {
             var arr: ITransaction[] = []
             value.forEach((result) => {
                 arr.push(result.data() as ITransaction)
@@ -47,22 +47,12 @@ function Transactions() {
                     <tbody>
                         {
                             transactiondata?.map((value) => {
-                                if (value.type === "Debit") {
                                     return <tr key={value.time.toString() + value.type}>
                                         <td>{value.customer_id}</td>
                                         <td>{value.amount}</td>
                                         <td>{value.to_from}</td>
                                         <td>{`${new Date(value.time).getDate().toString()}/${new Date(value.time).getMonth().toString()}/${new Date(value.time).getFullYear().toString()} - ${new Date(value.time).getHours().toString()}:${new Date(value.time).getMinutes().toString()}:${new Date(value.time).getSeconds() < 10 ? "0" + new Date(value.time).getSeconds().toString() : new Date(value.time).getSeconds().toString()}`}</td>
                                     </tr>
-                                }
-                                else if(value.type === "Credit") {
-                                    return <tr key={value.time}>
-                                        <td>{value.customer_id}</td>
-                                        <td>{value.amount}</td>
-                                        <td>{value.to_from}</td>
-                                        <td>{`${new Date(value.time).getDate().toString()}/${new Date(value.time).getMonth().toString()}/${new Date(value.time).getFullYear().toString()} - ${new Date(value.time).getHours().toString()}:${new Date(value.time).getMinutes().toString()}:${new Date(value.time).getSeconds() < 10 ? "0" + new Date(value.time).getSeconds().toString() : new Date(value.time).getSeconds().toString()}`}</td>
-                                    </tr>
-                                }
                             })
                         }
                     </tbody>
