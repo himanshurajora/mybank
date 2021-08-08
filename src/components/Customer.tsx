@@ -58,6 +58,7 @@ function Customer() {
         })
     }, [])
 
+    
 
     /**
      * send fucntion for money transfers
@@ -164,10 +165,10 @@ function Customer() {
                                 {
                                     transactiondata?.map((value) => {
                                         if (value.type == "Credit") {
-                                            return <p key={value.time} className="credited"> + Credited {value.amount} from {value.to_from}</p>
+                                            return <p key={value.time} className="credited"> + Credited {value.amount} from <span id="goc" >{value.to_from}</span></p>
                                         }
                                         else {
-                                            return <p key={value.time} className="debited"> - Debited {value.amount} to {value.to_from}</p>
+                                            return <p key={value.time} className="debited"> - Debited {value.amount} to <span id="god" >{value.to_from}</span></p>
                                         }
                                     })
                                 }

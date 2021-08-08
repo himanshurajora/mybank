@@ -4,8 +4,9 @@
 }
 
 .App{
-  position: absolute;
+  /* position: absolute; */
   background-color: rgb(202, 243, 255);
+  min-height: 1020px;
   height: 100%;
   width: 100%;
 }

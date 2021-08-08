@@ -7,6 +7,7 @@ import Home from './components/Home'
 import All from './components/All'
 import dataset from './dataset/dataset'
 import Customer from './components/Customer'
+import Transactions from './components/Transactions'
 
 function App() {
 
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route path="/" exact>
             <Home />
+          </Route>
+          <Route path="/transactions" exact>
+            <Transactions></Transactions>
           </Route>
           <Route path="/customer/:id" exact>
             <Customer></Customer>

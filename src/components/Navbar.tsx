@@ -8,6 +8,7 @@ function Navbar() {
                 <Link to="/" className="main-link">MyBank</Link>
                 <span>
                 {/* <Link to="/" className="link">Home</Link> */}
+                <Link to="/transactions" className="link">Transactions</Link>
                 <Link to="/customers" className="link">View All Customers</Link>
                 </span>
             </nav>
@@ -16,3 +17,4 @@ function Navbar() {
 }
 
 export default Navbar
+
